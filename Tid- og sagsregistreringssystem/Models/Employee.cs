@@ -2,8 +2,20 @@
 {
     public class Employee
     {
-        private string name {  get; set; }
-        private int initials { get; set; }
-        private int cpr { get; set; }
+        private static int counter = 0; // counter for initials
+        private string Name {  get; set; }
+        private int Initials { get; set; }
+        private int Cpr { get; set; }
+
+        public Employee(string name, int cpr)
+        {
+            Name = name;
+            Initials = ++counter;
+            Cpr = cpr;
+        }
+
+        public string GetName() => Name;
+        public int GetInitials() => Initials;
+        public int GetCpr() => Cpr;
     }
 }

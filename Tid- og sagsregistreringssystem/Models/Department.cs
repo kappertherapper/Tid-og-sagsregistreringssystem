@@ -5,10 +5,27 @@ namespace Tid__og_sagsregistreringssystem.Models
 {
     public class Department
     {
-        private string name { get; set; }
-        private int number { get; set; }
-        private Company company { get; set; }
-        private List<TaskManager> tasks { get; set; }
+        private static int counter = 0; // counter for number
+        private string Name { get; set; }
+        private int Number { get; set; }
+        private Company Company { get; set; }
+        private List<TaskManager> Tasks { get; set; }
+        private List<Employee> Employees { get; set; }
 
+        public Department()
+        {
+            
+        }
+
+        public Department(string name, Company company)
+        {
+            Name = name;
+            Number = ++counter;
+            Company = company;
+            Tasks = new List<TaskManager>();
+            Employees = new List<Employee>();
+        }
+
+        public List<Employee> GetEmployees => Employees;
     }
 }

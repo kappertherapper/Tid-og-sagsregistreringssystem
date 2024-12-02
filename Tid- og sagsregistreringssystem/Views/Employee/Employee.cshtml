@@ -1,0 +1,34 @@
+﻿@model List<Tid__og_sagsregistreringssystem.Models.Department>
+
+@{
+    ViewData["Title"] = "Employee";
+}
+
+<h1>Employees</h1>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    @foreach (var department in ViewBag.Departments) 
+    {
+        foreach (var employee in ViewBag.Employees) {
+            <div class="course-details">
+                <p>
+                    <b>Navn:</b>
+                    <textfield type="text" name="Name" value="@employee.GetName()" />
+                </p>
+
+                <p>
+                    <b>Initialer:</b>
+                    <textfield type="text" name="Initials" value="@employee.GetInitials()" />
+                </p>
+
+                <p>
+                    <b>CPR:</b>
+                    <textfield type="text" name="Cpr" value="@employee.GetCpr()" />
+                </p>
+            </div>
+        }
+    }
+
+</div>
