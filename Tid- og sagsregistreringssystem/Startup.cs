@@ -50,7 +50,7 @@ namespace Tid__og_sagsregistreringssystem
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Employee}/{action=Index}/{id?}");
+                    pattern: "{controller=TaskManager}/{action=Index}/{id?}");
             });
         }
     }

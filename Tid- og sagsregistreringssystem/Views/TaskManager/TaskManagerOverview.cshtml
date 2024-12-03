@@ -1,0 +1,93 @@
+﻿@model Department
+  
+@{
+	ViewData["Title"] = "TaskManager";
+    <link rel="stylesheet" href="~/css/TaskManagerStyleSheet.css"/>
+}
+
+<h1>Task Manager</h1>
+
+<!-- Dropdown Afdelinger -->
+<div class="Department-group">
+    <label for="Department">Vælg afdeling:</label>
+    @Html.DropDownListFor(
+        model => model.Name,
+        new SelectList(ViewBag.Departments,"Number", "Name"),
+        "Vælg en afdeling",
+            new { @id = "department-dropdown", @class = "department-dropdown" }
+        )
+</div>
+
+<!-- List Medarbejdere -->
+<div id="employeeList">
+    <p>Ingen medarbejdere fundet endnu.</p>
+</div>
+
+<button id="openModalBtn" class="btn btn-primary">Åbn Modal</button>
+
+<!-- Modal Tidsregistrering -->
+<div class="modal" tabindex="-1" id="timestampModal">
+    <div class="">
+        <div class="">
+            <div class="modal-header">
+                <h5 class="modal-title">Tids Registrering</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               
+                <p>Dette er indholdet af din modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-close" data-dismiss="modal">Luk</button>
+                <button type="button" class="btn btn-save">Gem ændringer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Scripts-->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            $("#openModalBtn").click(function() {
+                $("#timestampModal").modal('show'); //åben
+            });
+
+            $(".close").click(function() {
+                $("#timestampModal").modal('hide'); //lukke
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        $('#department-dropdown').change(function () {
+            var departmentNumber = $(this).val();
+
+            if (departmentNumber) {
+                $.get('/TaskManager/GetEmployeesByDepartment', { departmentNumber: departmentNumber }, function (data) {
+                    if (data.length > 0) {
+                        var employeeList = '<ul>';
+                        $.each(data, function (index, employee) {
+                            employeeList += '<li>' + employee.name + ' (' + employee.cpr + ') --- <button id="openModalBtn" onclick="alert(\'Handling for ' + employee.name + '\')">Registrer Arbejdstid</button> </li>';
+                        });
+                        employeeList += '</ul>';
+                        $('#employeeList').html(employeeList); - h
+                    } else {
+                        $('#employeeList').html('<p>Ingen medarbejdere fundet.</p>');
+                    }
+                });
+            } else {
+                $('#employeeList').html('<p>Ingen medarbejdere fundet endnu.</p>');
+            }
+        });
+    });
+</script>
+}

@@ -14,13 +14,7 @@ namespace Tid__og_sagsregistreringssystem.Controllers
         {
 
             
-            var employee1 = new Employee("Anders", 110795-5566);
-            var employee2 = new Employee("Noller", 160288-2776);
-            var employee3 = new Employee("Flemming", 110795-5786);
-
-            employees.Add(employee1);
-            employees.Add(employee2);
-            employees.Add(employee3);
+           
 
             
             var company = new Company("sejt company ja");

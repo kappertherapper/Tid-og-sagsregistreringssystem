@@ -4,7 +4,7 @@ namespace Tid__og_sagsregistreringssystem.Models
 {
     public class Company
     {
-        private string Name { get; set; }
+        public string Name { get; set; }
         private List<Department> Departments { get; set; }
 
         public Company(string name) 
@@ -12,5 +12,7 @@ namespace Tid__og_sagsregistreringssystem.Models
             Name = name;
             Departments = new List<Department>();
         }
+
+        public List<Department> GetDepartments => Departments;
     }
 }

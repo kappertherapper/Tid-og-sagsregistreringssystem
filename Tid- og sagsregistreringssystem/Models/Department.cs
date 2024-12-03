@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Tid__og_sagsregistreringssystem.Models
@@ -6,26 +7,30 @@ namespace Tid__og_sagsregistreringssystem.Models
     public class Department
     {
         private static int counter = 0; // counter for number
-        private string Name { get; set; }
-        private int Number { get; set; }
-        private Company Company { get; set; }
+        public string Name { get; set; }
+        public int Number { get; set; }
+        public Company Company { get; set; }
         private List<TaskManager> Tasks { get; set; }
-        private List<Employee> Employees { get; set; }
-
-        public Department()
-        {
-            
-        }
+        public List<Employee> Employees { get; set; } = new List<Employee>();
 
         public Department(string name, Company company)
         {
             Name = name;
-            Number = ++counter;
+            Number = new Random().Next(1000, 9999);
             Company = company;
             Tasks = new List<TaskManager>();
             Employees = new List<Employee>();
         }
 
         public List<Employee> GetEmployees => Employees;
+
+        public void AddEmployee(Employee employee)
+        {
+            if (!Employees.Contains(employee))
+            {
+                Employees.Add(employee);
+                employee.AssignDepartment(this);
+            }
+        }
     }
 }

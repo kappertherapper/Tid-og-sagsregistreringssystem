@@ -12,20 +12,20 @@
     @foreach (var department in ViewBag.Departments) 
     {
         foreach (var employee in ViewBag.Employees) {
-            <div class="course-details">
+            <div class="employee-details">
                 <p>
                     <b>Navn:</b>
-                    <textfield type="text" name="Name" value="@employee.GetName()" />
+                    <span>@employee.GetName()</span>
                 </p>
 
                 <p>
                     <b>Initialer:</b>
-                    <textfield type="text" name="Initials" value="@employee.GetInitials()" />
+                    <span>@employee.GetInitials()"</span>
                 </p>
 
                 <p>
                     <b>CPR:</b>
-                    <textfield type="text" name="Cpr" value="@employee.GetCpr()" />
+                    <span>@employee.GetCpr()</span>
                 </p>
             </div>
         }
