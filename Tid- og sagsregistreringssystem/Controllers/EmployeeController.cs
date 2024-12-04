@@ -18,7 +18,7 @@ namespace Tid__og_sagsregistreringssystem.Controllers
 
             
             var company = new Company("sejt company ja");
-            departments.Add(new Department("undersøgelse", company));
+            //departments.Add(new Department("undersøgelse", company));
 
         }
 

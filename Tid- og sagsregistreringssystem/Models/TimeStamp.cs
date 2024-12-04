@@ -4,9 +4,17 @@ namespace Tid__og_sagsregistreringssystem.Models
 {
     public class TimeStamp
     {
-        private DateTime StartTime { get; set; } 
-        private DateTime EndTime { get; set; }
-        private TaskManager Task { get; set; }
-        private Employee Employee { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public TaskManager Task { get; set; }
+        public Employee Employee { get; set; }
+
+        public TimeStamp(DateTime startTime, DateTime endTime, TaskManager task, Employee employee )
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            Task = task;
+            Employee = employee;
+        }
     }
 }

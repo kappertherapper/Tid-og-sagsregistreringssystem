@@ -18,7 +18,7 @@ namespace Tid__og_sagsregistreringssystem.Models
 
         public void AssignDepartment(Department department) // spiller sammen med addEmployee, og hæver encapsling
         {
-            Department = department;
+            this.Department = department;
             department.AddEmployee(this);
         }
 

@@ -23,29 +23,42 @@
     <p>Ingen medarbejdere fundet endnu.</p>
 </div>
 
-<button id="openModalBtn" class="btn btn-primary">Åbn Modal</button>
+<!-- Form Tidsregistrerings -->
+<h1>Tidsregistring</h1>
+<form id="create-form" action="/taskmanager/CreateTimeStamp" method="post">
 
-<!-- Modal Tidsregistrering -->
-<div class="modal" tabindex="-1" id="timestampModal">
-    <div class="">
-        <div class="">
-            <div class="modal-header">
-                <h5 class="modal-title">Tids Registrering</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-               
-                <p>Dette er indholdet af din modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-close" data-dismiss="modal">Luk</button>
-                <button type="button" class="btn btn-save">Gem ændringer</button>
-            </div>
-        </div>
+    <input type="hidden" id="selectedEmployeeData" name="selectedEmployeeData" />
+
+    <div class="create-group">
+        <label class="create-label" for="StartTime">Start tidspunkt:</label>
+        <input class="create-input" type="datetime-local" id="StartTime" name="StartTime" required />
     </div>
-</div>
+
+    <div class="create-group">
+        <label class="create-label" for="EndTime">Slut tidspunkt:</label>
+        <input class="create-input" type="datetime-local" id="EndTime" name="EndTime" required />
+    </div>
+    
+    <label class="create-label" for="Task">Vælg en opgave:</label>
+    <div id="taskContainer">
+
+    </div>
+
+    <div class="create-group">
+        <p>Medarbejder: <span id="selectedEmployeeName">Ingen medarbejder valgt</span></p>
+        <input type="hidden" id="selectedEmployee" name="selectedEmployee" required />
+    </div>
+
+    <div class="create-group">
+        <p>Afdeling: <span id="selectedDepartmentName">Ingen afdeling valgt</span></p>
+        <input type="hidden" id="selectedDepartment" name="selectedDepartment" value="" required />
+    </div>
+
+    <div class="create-group">
+        <button class="create-button" type="submit">Opret ny tidsregistring</button>
+    </div>
+</form>
+
 
 
 <!-- Scripts-->
@@ -53,41 +66,119 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-
-            $("#openModalBtn").click(function() {
-                $("#timestampModal").modal('show'); //åben
-            });
-
-            $(".close").click(function() {
-                $("#timestampModal").modal('hide'); //lukke
-            });
-        });
-    </script>
-
-    <script>
+<script>
     $(document).ready(function () {
         $('#department-dropdown').change(function () {
             var departmentNumber = $(this).val();
 
             if (departmentNumber) {
                 $.get('/TaskManager/GetEmployeesByDepartment', { departmentNumber: departmentNumber }, function (data) {
+                        //console.log(data);
                     if (data.length > 0) {
-                        var employeeList = '<ul>';
+                        var employeeList = '';
                         $.each(data, function (index, employee) {
-                            employeeList += '<li>' + employee.name + ' (' + employee.cpr + ') --- <button id="openModalBtn" onclick="alert(\'Handling for ' + employee.name + '\')">Registrer Arbejdstid</button> </li>';
+                                const employeeData = JSON.stringify(employee)
+                                    console.log("Generated Employee Data:", employeeData);
+                                employeeList += '<div>';
+                                employeeList += '<input type="radio" name="employee" class="employeeRadio" data-employee=\'' + employeeData + '\' /> ';
+                                employeeList += employee.name + ' (' + employee.cpr + ')';
+                                employeeList += '</div>';
                         });
-                        employeeList += '</ul>';
-                        $('#employeeList').html(employeeList); - h
+                        $('#employeeList').html(employeeList);
                     } else {
                         $('#employeeList').html('<p>Ingen medarbejdere fundet.</p>');
                     }
                 });
+                } else {
+                    $('#employeeList').html('<p>Ingen medarbejdere fundet endnu.</p>');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#department-dropdown').change(function () {
+                var departmentNumber = $(this).val();
+
+                if (departmentNumber) {
+                    $.get('/TaskManager/GetTasksByDepartment', { departmentNumber: departmentNumber }, function (data) {
+                         var outputElement = $('#taskContainer');
+
+                        if (data.length > 0) {
+                            var taskSelect = '<select id="taskSelect">';
+                            $.each(data, function (index, task) {
+                                    taskSelect += '<option value="' + task.title + '" data-name="' + task.taskNumber + '">';
+                                    taskSelect += task.title + ' (' + task.taskNumber + ')';
+                                    taskSelect += '</option>';
+                            });
+                            taskSelect += '</select>'
+
+                            outputElement.html(taskSelect);
+                        } else {
+                            outputElement.html('<p>Ingen tasks fundet.</p>');
+                        }
+                    }).fail(function () {
+                        $('#taskContainer').html('<p>Fejl ved indlæsning af tasks.</p>');
+                    });
+                } else {
+                    $('#taskContainer').html('<p>Ingen tasks fundet endnu.</p>');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).on('change', '.employeeRadio', function () {
+            console.log("Radio button changed!");
+            const selectedRadio = $('.employeeRadio:checked').first();
+
+            if (selectedRadio.length > 0) {
+                const employeeData = selectedRadio.attr('data-employee');
+                console.log("Employee Data:", employeeData); // JA
+
+        if (employeeData) {
+            try {
+                const employee = JSON.parse(employeeData);
+
+                $('#selectedEmployeeName').text(employee.name);
+                $('#selectedEmployee').val(employeeData);
+
+            } catch (e) {
+                console.error("Error parsing employee data:", e);
+                alert("Invalid employee data. Please try again.");
+            }
+        } else {
+            console.error("data-employee is missing or empty.");
+            alert("No employee data available for the selected option.");
+        }
             } else {
-                $('#employeeList').html('<p>Ingen medarbejdere fundet endnu.</p>');
+
+                document.getElementById('selectedEmployeeName').value = "";
+                document.getElementById('selectedEmployee').value = "";
             }
         });
-    });
-</script>
+    </script>
+
+    <script>
+        document.getElementById('department-dropdown').addEventListener('change', function () {
+            var selectedValue = this.options[this.selectedIndex].value;
+            var departmentName = this.options[this.selectedIndex].text;
+
+            document.getElementById('selectedDepartment').value = selectedValue;
+            document.getElementById('selectedDepartmentName').textContent = departmentName
+        });
+    </script>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const start = new Date(document.getElementById("StartTime").value);
+            const end = new Date(document.getElementById("EndTime").value);
+
+            if (start >= end) {
+                e.preventDefault();
+                alert("Slut tidspunkt skal være efter start tidspunkt");
+            }
+        });
+    </script>
 }
