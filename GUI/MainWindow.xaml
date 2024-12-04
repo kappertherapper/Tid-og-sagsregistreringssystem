@@ -15,5 +15,10 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Hello, World!" Grid.Row="0" Grid.Column="0"/>
+
     </Grid>
+    
+    
 </Window>

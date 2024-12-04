@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DataTransferObject.Models;
 
 namespace GUI
 {
@@ -25,9 +26,16 @@ namespace GUI
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        
 
+        public void AddEmployee()
+        {
+            //MyItems.Add("New Item");
+        }
+
+        public void RemoveEmployee(EmployeeDTO employee)
+        {
+            //MyItems.Remove(item);
         }
     }
 }
