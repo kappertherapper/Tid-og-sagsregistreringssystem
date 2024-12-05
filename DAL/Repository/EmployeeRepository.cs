@@ -3,6 +3,7 @@ using System.Linq;
 using DAL.Context;
 using DAL.Mapper;
 using DTO.Models;
+using DAL.Models;
 
 namespace DAL.Repository
 {
@@ -20,14 +21,10 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                List<EmployeeDTO> employeeDTOs = context.Employees
-                .Select(e => new EmployeeDTO
-                {
-                    Id = e.Id,
-                    Name = e.Name,
-                }).ToList();
+                List<Employee> retur = new List<Employee>();
+                retur = context.Employees.ToList();
 
-                return employeeDTOs;
+                return EmployeeMapper.Map(retur);
             }
         }
 

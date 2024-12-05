@@ -7,15 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <!-- Define grid layout -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
+        <!-- Employee ListView -->
         <ListView x:Name="EmployeeListView" Margin="10" Grid.Row="0" Grid.Column="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -24,5 +26,45 @@
             </ListView.ItemTemplate>
         </ListView>
 
+        <Label Grid.ColumnSpan="2" Margin="217,40,50,105" Grid.RowSpan="2">Indtast navn</Label>
+        <!-- TextBox for Name input -->
+        <TextBox 
+        x:Name="NameInput" 
+        Width="100" 
+        Height="30" 
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Top" 
+        Margin="0,59,0,0" />
+
+        <Label Grid.ColumnSpan="2" Margin="217,94,50,51" Grid.RowSpan="2">Indtask Cpr</Label>
+        <!-- TextBox for CPR input -->
+        <TextBox 
+        x:Name="CprInput" 
+        Width="100" 
+        Height="30" 
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Top" 
+        Margin="0,115,0,0" />
+
+        <!-- ComboBox for Department selection -->
+        <ComboBox 
+        x:Name="DepartmentComboBox" 
+        Height="30" 
+        VerticalAlignment="Top" 
+        Margin="339,181,50,0" 
+        DisplayMemberPath="Name" 
+        SelectedValuePath="Id" 
+        SelectionChanged="DepartmentComboBox_Text" />
+
+        <!-- Button to add a new employee -->
+        <Button 
+        Content="Ny medarbejder" 
+        Width="100" 
+        Height="50" 
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Top" 
+        Margin="0,167,0,0" 
+        Click="Button_AddEmployee" />
     </Grid>
+
 </Window>

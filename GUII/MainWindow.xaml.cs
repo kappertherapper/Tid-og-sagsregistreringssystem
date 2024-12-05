@@ -17,26 +17,59 @@ using DTO.Models;
 
 namespace GUII
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private EmployeeBLL EbLL;
+        private DepartmentBLL DepartBLL;
+        private DepartmentDTO selectedDepartment;
 
         public MainWindow()
         {
             InitializeComponent();
             EbLL = new EmployeeBLL();
+            DepartBLL = new DepartmentBLL();
 
-            LoadEmployees();
+
+            DisplayEmployees();
+            DepartmentComboBox.ItemsSource = DepartBLL.GetAllDepartments();
         }
 
-        private void LoadEmployees()
+        private void DisplayEmployees()
         {
             List<EmployeeDTO> employees = EbLL.GetAllEmployees();
 
             EmployeeListView.ItemsSource = employees;
+        }
+
+        private void DepartmentComboBox_Text(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            selectedDepartment = DepartmentComboBox.SelectedItem as DepartmentDTO;
+
+        }
+
+        private void Button_AddEmployee(object sender, RoutedEventArgs e)
+        {
+            EmployeeDTO employee = new EmployeeDTO();
+
+            string name = NameInput.Text.Trim();
+            string cpr = CprInput.Text.Trim();
+
+            if (name != null || cpr != null || selectedDepartment != null)
+            {
+                employee.Name = name;
+                employee.Cpr = cpr;
+                employee.DepartmentId = selectedDepartment.Id;
+                EbLL.AddEmployee(employee);
+
+                NameInput.Text = string.Empty;
+                CprInput.Text = string.Empty;
+
+                DisplayEmployees();
+            }
+            else
+            {
+                MessageBox.Show("fejl i indtastning", "Fejl", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         public void AddEmployee()

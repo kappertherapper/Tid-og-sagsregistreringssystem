@@ -11,7 +11,6 @@ namespace DAL.Context
         {
             Database.Log = Console.WriteLine;
         }
-        public DbSet<Company> Companys { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<TaskManager> Tasks { get; set; }
@@ -19,35 +18,35 @@ namespace DAL.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // Company -> Department (One-to-Many)
-            modelBuilder.Entity<Company>()
-                .HasMany(c => c.Departments)
-                .WithRequired(d => d.Company)
-                .HasForeignKey(d => d.CompanyId);
+            // Employee - Department (Many-to-One)
+            modelBuilder.Entity<Employee>()
+                .HasOptional(e => e.Department)
+                .WithMany()
+                .HasForeignKey(e => e.DepartmentId)
+                .WillCascadeOnDelete(false);
 
-            // Department -> Employees (One-to-Many)
-            modelBuilder.Entity<Department>()
-                .HasMany(d => d.Employees)
-                .WithRequired(e => e.Department)
-                .HasForeignKey(e => e.DepartmentId);
-
-            // Department -> Task (One-to-Many)
-            modelBuilder.Entity<Department>()
-                .HasMany(d => d.Tasks)
-                .WithRequired(t => t.Department)
-                .HasForeignKey(t => t.DepartmentId);
-
-            // Task -> TimeStamps (One-to-Many)
+            // TaskManager - Department (Many-to-One)
             modelBuilder.Entity<TaskManager>()
-                .HasMany(t => t.TimeStamps)
-                .WithRequired(ts => ts.Task)
+                .HasRequired(tm => tm.Department)
+                .WithMany()
+                .HasForeignKey(tm => tm.DepartmentId)
+                .WillCascadeOnDelete(false);
+
+            // TimeStamp - TaskManager (Many-to-One)
+            modelBuilder.Entity<TimeStamp>()
+                .HasRequired(ts => ts.Task)
+                .WithMany(t => t.TimeStamps)
                 .HasForeignKey(ts => ts.TaskId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Company>().ToTable("Companies");
-            modelBuilder.Entity<Department>().ToTable("Departments");
-            modelBuilder.Entity<TaskManager>().ToTable("Tasks");
-            modelBuilder.Entity<TimeStamp>().ToTable("TimeStamps");
+            // TimeStamp - Employee (Many-to-One)
+            modelBuilder.Entity<TimeStamp>()
+                .HasRequired(ts => ts.Employee)
+                .WithMany()
+                .HasForeignKey(ts => ts.EmployeeId)
+                .WillCascadeOnDelete(false);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

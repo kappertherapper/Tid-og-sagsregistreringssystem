@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -8,8 +10,8 @@ namespace DAL.Models
         public string Name {  get; set; }
         public string Initials { get; set; }
         public string Cpr { get; set; }
-        public int DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public int? DepartmentId { get; set; }
+        public virtual Department Department { get; set; }
 
         public Employee()
         {
@@ -23,12 +25,7 @@ namespace DAL.Models
             Cpr = cpr;
         }
 
-        public void AssignDepartment(Department department) // spiller sammen med addEmployee, og hæver encapsling
-        {
-            this.Department = department;
-            Department.Id = department.Id;
-            department.AddEmployee(this);
-        }
+      
 
         public string GetName() => Name;
         public string GetInitials() => Initials;

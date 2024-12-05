@@ -12,35 +12,30 @@ namespace DAL.Context
     {
         protected override void Seed(SagTidRegisterContext context)
         {
-            // Creating a company
-            var company = context.Companys.Add(new Company("Sejt bygning"));
 
             // Creating departments and associating them with the company
-            var department1 = context.Departments.Add(new Department("undersøgelse", company, 1));
-            var department2 = context.Departments.Add(new Department("biologisk", company, 2));
-            var department3 = context.Departments.Add(new Department("kateofask", company, 3));
+            var department = context.Departments.Add(new Department() { Id = 1, Name = "Den", Number = 5 });
+            var department1 = context.Departments.Add(new Department() { Id = 2, Name = "HR", Number = 10 });
+            var department2 = context.Departments.Add(new Department() { Id = 3, Name = "IT", Number = 15 });
+            var department3 = context.Departments.Add(new Department() { Id = 4, Name = "Finance", Number = 20 });
+
+
 
             // Creating employees and assigning them to departments
-            var employee1 = context.Employees.Add(new Employee("Anders", "110795-5566"));
-            var employee2 = context.Employees.Add(new Employee("Noller", "160288-2776"));
-            var employee3 = context.Employees.Add(new Employee("Flemming", "110795-5786"));
-
-            employee1.AssignDepartment(department1);
-            employee2.AssignDepartment(department2);
-            employee3.AssignDepartment(department3);
+            var employee = context.Employees.Add(new Employee() { Id = 1, Cpr = "6234-7823", Department = department, DepartmentId = 1, Name = "Henne" });
+            var employee1 = context.Employees.Add(new Employee() { Id = 2, Cpr = "1234-5678", Department = department1, DepartmentId = 2, Name = "John Doe" });
+            var employee2 = context.Employees.Add(new Employee() { Id = 3, Cpr = "2345-6789", Department = department1, DepartmentId = 2, Name = "Jane Smith" });
+            var employee3 = context.Employees.Add(new Employee() { Id = 4, Cpr = "3456-7890", Department = department2, DepartmentId = 3, Name = "Alice Brown" });
+            var employee4 = context.Employees.Add(new Employee() { Id = 5, Cpr = "4567-8901", Department = department3, DepartmentId = 4, Name = "Bob White" });
 
             // Creating tasks and associating them with departments
-            var task1 = context.Tasks.Add(new TaskManager("help", 1, "bare gøre det"));
-            var task2 = context.Tasks.Add(new TaskManager("hæfghlp", 2, "ja gsdføre det"));
-            var task3 = context.Tasks.Add(new TaskManager("dfg", 3, "ja gøre det"));
-            var task4 = context.Tasks.Add(new TaskManager("hældfgp", 4, "ja gøre det"));
-            var task5 = context.Tasks.Add(new TaskManager("hæfghlp", 5, "ja gøre det"));
+            var task = context.Tasks.Add(new TaskManager() { Id = 1, Department = department, DepartmentId = 1, Description = "wauuuuw", TaskNumber = 1, Title = "hold da hel op" });
+            var task1 = context.Tasks.Add(new TaskManager() { Id = 2, Department = department1, DepartmentId = 2, Description = "Plan company event", TaskNumber = 2, Title = "Event Planning" });
+            var task2 = context.Tasks.Add(new TaskManager() { Id = 3, Department = department2, DepartmentId = 3, Description = "Upgrade server", TaskNumber = 3, Title = "Server Upgrade" });
+            var task3 = context.Tasks.Add(new TaskManager() { Id = 4, Department = department3, DepartmentId = 4, Description = "Prepare budget report", TaskNumber = 4, Title = "Budget Preparation" });
+            var task4 = context.Tasks.Add(new TaskManager() { Id = 5, Department = department1, DepartmentId = 2, Description = "Conduct interviews", TaskNumber = 5, Title = "Recruitment" });
 
-            task1.AssignDepartment(department1);
-            task2.AssignDepartment(department2);
-            task3.AssignDepartment(department3);
-            task4.AssignDepartment(department1);
-            task5.AssignDepartment(department1);
+            // Assign Employees to Tasks (optional example if a relation exists between Employee and Tasks)
 
             // Save changes to persist data to the database
             context.SaveChanges();
