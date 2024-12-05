@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAccessLayer.Models
+namespace DAL.Models
 {
     public class TaskManager
     {

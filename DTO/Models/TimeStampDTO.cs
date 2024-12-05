@@ -1,28 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DataAccessLayer.Models
+namespace DTO.Models
 {
-    public class TimeStamp
+    public class TimeStampDTO
     {
         public int Id { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int TaskId { get; set; }
-        public TaskManager Task { get; set; }
         public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
 
-        public TimeStamp()
+        public TimeStampDTO()
         {
             
         }
 
-        public TimeStamp(DateTime startTime, DateTime endTime, TaskManager task, Employee employee )
+        public TimeStampDTO(DateTime startTime, DateTime endTime, int taskId, int employeeId)
         {
             StartTime = startTime;
             EndTime = endTime;
-            Task = task;
-            Employee = employee;
+            TaskId = taskId;
+            EmployeeId = employeeId;
         }
     }
 }

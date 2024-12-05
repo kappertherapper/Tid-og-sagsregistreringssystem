@@ -1,13 +1,13 @@
-﻿using DataTransferObject.Models;
-using DataAccessLayer.Models;
+﻿using DTO.Models;
+using DAL.Models;
 
-namespace DataTransferObject.Mapper
+namespace DAL.Mapper
 {
     public static class EmployeeMapper
     {
         public static EmployeeDTO Map(Employee employee)
         {
-            EmployeeDTO DTOemployee = new();
+            EmployeeDTO DTOemployee = new EmployeeDTO();
             if (employee != null)
             {
                 DTOemployee.Name = employee.Name;
@@ -18,7 +18,7 @@ namespace DataTransferObject.Mapper
 
         public static Employee Map(EmployeeDTO employee)
         {
-            Employee DALemployee = new();
+            Employee DALemployee = new Employee();
             if (employee != null)
             {
                 DALemployee.Name = employee.Name;

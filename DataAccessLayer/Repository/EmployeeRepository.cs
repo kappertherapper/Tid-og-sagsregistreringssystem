@@ -3,7 +3,8 @@ using System.Linq;
 using DataAccessLayer.Context;
 using DataAccessLayer.Mapper;
 using DataTransferObject.Models;
-namespace DataAccessLayer.Repository
+
+namespace DataTransferObject.Repository
 {
     public class EmployeeRepository
     {
@@ -13,12 +14,11 @@ namespace DataAccessLayer.Repository
             return EmployeeMapper.Map(context.Employees.Find(id));
         }
 
-        public static List<EmployeeDTO> GetAllEmployees(int id)
+        public static List<EmployeeDTO> GetAllEmployees()
         {
             using SagTidRegisterContext context = new SagTidRegisterContext();
 
             List<EmployeeDTO> employeeDTOs = context.Employees
-                .Where(e => e.Id == id)
                 .Select(e => new EmployeeDTO
                 {
                     Id = e.Id,

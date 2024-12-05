@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,18 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BLL.BLL;
-using DTO.Models;
-using DAL.Context;
 
 
-namespace GUI
+namespace GUI_HR
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
-
     public partial class MainWindow : Window
     {
         private EmployeeBLL EbLL;

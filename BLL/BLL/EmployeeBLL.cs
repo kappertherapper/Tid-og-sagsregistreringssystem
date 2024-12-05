@@ -1,9 +1,9 @@
-﻿using DataAccessLayer.Repository;
-using DataTransferObject.Models;
+﻿using DAL.Repository;
+using DTO.Models;
 using System;
 using System.Collections.Generic;
 
-namespace BusinessLogicLayer.BLL
+namespace BLL.BLL
 {
     public class EmployeeBLL
     {

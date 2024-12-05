@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Models
+namespace DAL.Models
 {
     public class Department
         {

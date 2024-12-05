@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FF23723F-9EF2-410F-9A02-860788A1457C}</ProjectGuid>
+    <ProjectGuid>{C533A0B1-85D7-417E-844E-CBE09C94B453}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DAL</RootNamespace>
-    <AssemblyName>DAL</AssemblyName>
+    <RootNamespace>BLL</RootNamespace>
+    <AssemblyName>BLL</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -51,19 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\SagTidRegisterContext.cs" />
-    <Compile Include="Context\SagTidRegisterInitializer.cs" />
-    <Compile Include="Mapper\EmployeeMapper.cs" />
-    <Compile Include="Mapper\TimeStampMapper.cs" />
-    <Compile Include="Models\Company.cs" />
-    <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\TaskManager.cs" />
-    <Compile Include="Models\TimeStamp.cs" />
+    <Compile Include="BLL\EmployeeBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\EmployeeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{ff23723f-9ef2-410f-9a02-860788a1457c}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{f6ef7e43-5cd3-4db3-8c0b-ceda44895547}</Project>
       <Name>DTO</Name>

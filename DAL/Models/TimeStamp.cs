@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataAccessLayer.Models
+namespace DAL.Models
 {
     public class TimeStamp
     {

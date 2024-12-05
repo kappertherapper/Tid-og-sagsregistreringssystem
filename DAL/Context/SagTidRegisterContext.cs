@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using DataAccessLayer.Models;
+using DAL.Models;
 
-namespace DataAccessLayer.Context
+namespace DAL.Context
 {
     public class SagTidRegisterContext :DbContext
     {
