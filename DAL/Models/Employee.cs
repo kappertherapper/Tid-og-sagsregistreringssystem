@@ -15,7 +15,7 @@ namespace DAL.Models
 
         public Employee()
         {
-            
+            Initials = string.IsNullOrEmpty(Name) ? "" : Name.Substring(0, Math.Min(2, Name.Length));
         }
 
         public Employee(string name, string cpr)
