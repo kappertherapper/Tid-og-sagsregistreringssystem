@@ -13,7 +13,7 @@ namespace DAL.Context
         }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<TaskManager> Tasks { get; set; }
+        public DbSet<TaskManager> TaskManagers { get; set; }
         public DbSet<TimeStamp> TimeStamps { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

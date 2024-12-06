@@ -29,11 +29,11 @@ namespace DAL.Context
             var employee4 = context.Employees.Add(new Employee() { Id = 5, Cpr = "4567-8901", Department = department3, DepartmentId = 4, Name = "Bob White" });
 
             // Creating tasks and associating them with departments
-            var task = context.Tasks.Add(new TaskManager() { Id = 1, Department = department, DepartmentId = 1, Description = "wauuuuw", TaskNumber = 1, Title = "hold da hel op" });
-            var task1 = context.Tasks.Add(new TaskManager() { Id = 2, Department = department1, DepartmentId = 2, Description = "Plan company event", TaskNumber = 2, Title = "Event Planning" });
-            var task2 = context.Tasks.Add(new TaskManager() { Id = 3, Department = department2, DepartmentId = 3, Description = "Upgrade server", TaskNumber = 3, Title = "Server Upgrade" });
-            var task3 = context.Tasks.Add(new TaskManager() { Id = 4, Department = department3, DepartmentId = 4, Description = "Prepare budget report", TaskNumber = 4, Title = "Budget Preparation" });
-            var task4 = context.Tasks.Add(new TaskManager() { Id = 5, Department = department1, DepartmentId = 2, Description = "Conduct interviews", TaskNumber = 5, Title = "Recruitment" });
+            var task = context.TaskManagers.Add(new TaskManager() { Id = 1, Department = department, DepartmentId = 1, Description = "wauuuuw", TaskNumber = 1, Title = "hold da hel op" });
+            var task1 = context.TaskManagers.Add(new TaskManager() { Id = 2, Department = department1, DepartmentId = 2, Description = "Plan company event", TaskNumber = 2, Title = "Event Planning" });
+            var task2 = context.TaskManagers.Add(new TaskManager() { Id = 3, Department = department2, DepartmentId = 3, Description = "Upgrade server", TaskNumber = 3, Title = "Server Upgrade" });
+            var task3 = context.TaskManagers.Add(new TaskManager() { Id = 4, Department = department3, DepartmentId = 4, Description = "Prepare budget report", TaskNumber = 4, Title = "Budget Preparation" });
+            var task4 = context.TaskManagers.Add(new TaskManager() { Id = 5, Department = department1, DepartmentId = 2, Description = "Conduct interviews", TaskNumber = 5, Title = "Recruitment" });
 
             // Assign Employees to Tasks (optional example if a relation exists between Employee and Tasks)
 

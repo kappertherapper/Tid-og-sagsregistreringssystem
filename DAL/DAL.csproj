@@ -55,6 +55,7 @@
     <Compile Include="Context\SagTidRegisterInitializer.cs" />
     <Compile Include="Mapper\DepartmentMapper.cs" />
     <Compile Include="Mapper\EmployeeMapper.cs" />
+    <Compile Include="Mapper\TaskManagerMapper.cs" />
     <Compile Include="Mapper\TimeStampMapper.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DepartmentRepository.cs" />
     <Compile Include="Repository\EmployeeRepository.cs" />
+    <Compile Include="Repository\TaskManagerRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">

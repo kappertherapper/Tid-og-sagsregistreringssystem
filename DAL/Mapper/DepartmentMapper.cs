@@ -66,6 +66,5 @@ namespace DAL.Mapper
             else
                 data = null;
         }
-
     }
 }

@@ -7,18 +7,28 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <!-- Define grid layout -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
+        <!-- grid layout -->
+        <!-- <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions> -->
 
         <!-- Employee ListView -->
-        <ListView x:Name="EmployeeListView" Margin="10" Grid.Row="0" Grid.Column="0">
+        <Label RenderTransformOrigin="0.5,0.5" Margin="17,22,645,352">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-179.768"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform> Liste af medarbejder
+        </Label>
+        <ListView x:Name="EmployeeListView" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" Margin="10,106,641,143" Grid.Row="0" Grid.Column="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" FontSize="14" />
@@ -26,32 +36,44 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Label Grid.ColumnSpan="2" Margin="217,40,50,105" Grid.RowSpan="2">Indtast navn</Label>
+        <Label Margin="206,51,475,312">Liste af sager</Label>
+        <!-- Task ListView -->
+        <ListView x:Name="TaskListView" Margin="175,106,464,143" Grid.Row="0" RenderTransformOrigin="0.538,0.503">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" FontSize="14" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <Label Margin="431,10,234,344">Indtast navn</Label>
         <!-- TextBox for Name input -->
         <TextBox 
         x:Name="NameInput" 
         Width="100" 
         Height="30" 
-        HorizontalAlignment="Center" 
+        HorizontalAlignment="Left" 
         VerticalAlignment="Top" 
-        Margin="0,59,0,0" />
+        Margin="431,45,0,0" />
 
-        <Label Grid.ColumnSpan="2" Margin="217,94,50,51" Grid.RowSpan="2">Indtask Cpr</Label>
+        <Label Margin="431,95,234,260">Indtask Cpr</Label>
         <!-- TextBox for CPR input -->
         <TextBox 
         x:Name="CprInput" 
         Width="100" 
         Height="30" 
-        HorizontalAlignment="Center" 
+        HorizontalAlignment="Left" 
         VerticalAlignment="Top" 
-        Margin="0,115,0,0" />
+        Margin="431,126,0,0" />
 
+        <Label Margin="431,201,254,169">Vælg afdeling</Label>
         <!-- ComboBox for Department selection -->
         <ComboBox 
         x:Name="DepartmentComboBox" 
-        Height="30" 
+        Height="22" 
         VerticalAlignment="Top" 
-        Margin="339,181,50,0" 
+        Margin="426,254,187,0" 
         DisplayMemberPath="Name" 
         SelectedValuePath="Id" 
         SelectionChanged="DepartmentComboBox_Text" />
@@ -60,10 +82,20 @@
         <Button 
         Content="Ny medarbejder" 
         Width="100" 
-        Height="50" 
-        HorizontalAlignment="Center" 
+        Height="35" 
+        HorizontalAlignment="Left" 
         VerticalAlignment="Top" 
-        Margin="0,167,0,0" 
+        Margin="426,310,0,0" 
+        Click="Button_AddEmployee" />
+
+        <!-- Button to edit a employee --> 
+        <Button  
+        Content="Ændre medarbejder" 
+        Width="130" 
+        Height="35" 
+        HorizontalAlignment="Left" 
+        VerticalAlignment="Top" 
+        Margin="544,310,0,0" 
         Click="Button_AddEmployee" />
     </Grid>
 

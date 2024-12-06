@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Models\DepartmentDTO.cs" />
     <Compile Include="Models\EmployeeDTO.cs" />
+    <Compile Include="Models\TaskManagerDTO.cs" />
     <Compile Include="Models\TimeStampDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
