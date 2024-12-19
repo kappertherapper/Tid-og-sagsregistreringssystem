@@ -9,7 +9,7 @@ namespace DAL.Context
     {
         public SagTidRegisterContext() : base("SagTidRegisterDB")
         {
-            Database.Log = Console.WriteLine;
+            Database.SetInitializer(new SagTidRegisterInitializer());
         }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }

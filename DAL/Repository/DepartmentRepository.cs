@@ -19,7 +19,6 @@ namespace DAL.Repository
             }
         }
 
-        // Data -> List -> Departmant to DTO -> return
         public static List<DepartmentDTO> GetAllDepartments()
         {
             using (var context = new SagTidRegisterContext())
@@ -45,7 +44,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                Models.Department datadept = context.Departments.Find(department.Id);
+                Department datadept = context.Departments.Find(department.Id);
                 DepartmentMapper.Update(department, datadept);
 
                 context.SaveChanges();

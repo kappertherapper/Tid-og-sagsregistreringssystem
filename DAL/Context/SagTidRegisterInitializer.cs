@@ -19,8 +19,6 @@ namespace DAL.Context
             var department2 = context.Departments.Add(new Department() { Id = 3, Name = "IT", Number = 15 });
             var department3 = context.Departments.Add(new Department() { Id = 4, Name = "Finance", Number = 20 });
 
-
-
             // Creating employees and assigning them to departments
             var employee = context.Employees.Add(new Employee() { Id = 1, Cpr = "6234-7823", Department = department, DepartmentId = 1, Name = "Henne" });
             var employee1 = context.Employees.Add(new Employee() { Id = 2, Cpr = "1234-5678", Department = department1, DepartmentId = 2, Name = "John Doe" });
@@ -34,8 +32,6 @@ namespace DAL.Context
             var task2 = context.TaskManagers.Add(new TaskManager() { Id = 3, Department = department2, DepartmentId = 3, Description = "Upgrade server", TaskNumber = 3, Title = "Server Upgrade" });
             var task3 = context.TaskManagers.Add(new TaskManager() { Id = 4, Department = department3, DepartmentId = 4, Description = "Prepare budget report", TaskNumber = 4, Title = "Budget Preparation" });
             var task4 = context.TaskManagers.Add(new TaskManager() { Id = 5, Department = department1, DepartmentId = 2, Description = "Conduct interviews", TaskNumber = 5, Title = "Recruitment" });
-
-            // Assign Employees to Tasks (optional example if a relation exists between Employee and Tasks)
 
             // Save changes to persist data to the database
             context.SaveChanges();

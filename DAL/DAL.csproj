@@ -65,6 +65,7 @@
     <Compile Include="Repository\DepartmentRepository.cs" />
     <Compile Include="Repository\EmployeeRepository.cs" />
     <Compile Include="Repository\TaskManagerRepository.cs" />
+    <Compile Include="Repository\TimeStampRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">

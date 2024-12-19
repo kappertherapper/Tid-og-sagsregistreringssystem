@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<!-- Scripts-->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#department-dropdown').change(function () {
+                var departmentId = $(this).val();
+
+                if (departmentId) {
+                    $.get('/TaskManager/GetEmployeesByDepartment', { departmentId: departmentId }, function (data) {
+
+                        if (data.length > 0) {
+                            var employeeList = '';
+                            $.each(data, function (index, employee) {
+                                const employeeData = JSON.stringify(employee)
+                                console.log("Generated Employee Data:", employeeData);
+                                employeeList += '<div>';
+                                employeeList += '<input type="radio" name="EmployeeId" value="' + employee.Id + '" class="employeeRadio" data-employee=\'' + employeeData + '\' /> ';
+                                employeeList += employee.name + ' (' + employee.cpr + ')';
+                                employeeList += '</div>';
+                            });
+                            $('#employeeList').html(employeeList);
+                        } else {
+                            $('#employeeList').html('<p>Ingen medarbejdere fundet.</p>');
+                        }
+                    });
+                } else {
+                    $('#employeeList').html('<p>Ingen medarbejdere fundet endnu.</p>');
+                }
+            });
+            $('#create-form').submit(function (e) {
+                if (!$('input[name="EmployeeId"]:checked').val()) {
+                    e.preventDefault();
+                    alert('Please select an employee.');
+                }
+            });
+        });
+    </script>
+
+    <script>
+            $(document).ready(function () {
+                $('#department-dropdown').change(function () {
+                    var departmentNumber = $(this).val();
+
+                    if (departmentNumber) {
+                        $.get('/TaskManager/GetTasksByDepartment', { departmentNumber: departmentNumber }, function (data) {
+                            var outputElement = $('#taskContainer');
+
+                            if (data.length > 0) {
+                                var taskSelect = '<select id="taskSelect" name="TaskId">';
+                                $.each(data, function (index, task) {
+                                    taskSelect += '<option value="' + task.Id + '">' + task.title + ' (' + task.taskNumber + ')</option>';
+                                });
+                                taskSelect += '</select>'
+
+                                outputElement.html(taskSelect);
+                            } else {
+                                outputElement.html('<p>Ingen tasks fundet.</p>');
+                            }
+                        }).fail(function () {
+                            $('#taskContainer').html('<p>Fejl ved indlæsning af tasks.</p>');
+                        });
+                    } else {
+                        $('#taskContainer').html('<p>Ingen tasks fundet endnu.</p>');
+                    }
+                });
+            });
+        </script>
+
+    <script>
+        $(document).on('change', '.employeeRadio', function () {
+            const selectedRadio = $('.employeeRadio:checked').first();
+
+            if (selectedRadio.length > 0) {
+                const employeeData = selectedRadio.attr('data-employee');
+
+                if (employeeData) {
+                    try {
+                        const employee = JSON.parse(employeeData);
+
+                        $('#selectedEmployeeName').text(employee.Id);
+                        $('#selectedEmployee').val(employeeData);
+
+                    } catch (e) {
+                        console.error("Error parsing employee data:", e);
+                        alert("Invalid employee data. Please try again.");
+                    }
+                } else {
+                    console.error("data-employee is missing or empty.");
+                    alert("No employee data available for the selected option.");
+                }
+            } else {
+
+                document.getElementById('selectedEmployeeName').value = "";
+                document.getElementById('selectedEmployee').value = "";
+            }
+        });
+    </script>
+
+    <script>
+            document.getElementById('department-dropdown').addEventListener('change', function () {
+                var selectedValue = this.options[this.selectedIndex].value;
+                var departmentName = this.options[this.selectedIndex].text;
+
+                document.getElementById('selectedDepartment').value = selectedValue;
+                document.getElementById('selectedDepartmentName').textContent = departmentName
+            });
+        </script>
+
+        <script>
+            document.querySelector("form").addEventListener("submit", function (e) {
+                const start = new Date(document.getElementById("StartTime").value);
+                const end = new Date(document.getElementById("EndTime").value);
+
+                if (start >= end) {
+                    e.preventDefault();
+                    alert("Slut tidspunkt skal være efter start tidspunkt");
+                }
+            });
+        </script>
+}

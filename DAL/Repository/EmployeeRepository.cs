@@ -4,6 +4,7 @@ using DAL.Context;
 using DAL.Mapper;
 using DTO.Models;
 using DAL.Models;
+using System;
 
 namespace DAL.Repository
 {
@@ -14,6 +15,16 @@ namespace DAL.Repository
             using (var context = new SagTidRegisterContext())
             {
                 return EmployeeMapper.Map(context.Employees.Find(id));
+            }
+        }
+
+        public static List<EmployeeDTO> GetAllEmployeesByDepartment(int id)
+        {
+            using (var context = new SagTidRegisterContext())
+            {
+                var retur = context.Employees.Where(e => e.DepartmentId == id).ToList();
+
+                return EmployeeMapper.Map(retur);
             }
         }
 
@@ -43,10 +54,20 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                Models.Employee dataemp = context.Employees.Find(employee.Id);
+                Employee dataemp = context.Employees.Find(employee.Id);
                 EmployeeMapper.Update(employee, dataemp);
 
                 context.SaveChanges();
+            }
+        }
+
+        public static double GetTotalWorkTime(int id)
+        {
+            using (var context = new SagTidRegisterContext())
+            {
+                return context.TimeStamps
+                    .Where(t => t.EmployeeId == id)
+                    .ToList().Sum(t => (t.EndTime - t.StartTime).TotalHours);
             }
         }
     }

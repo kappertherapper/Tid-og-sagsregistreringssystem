@@ -17,8 +17,9 @@ namespace DAL.Mapper
             {
                 DTOtimeStamp.StartTime = timeStamp.StartTime;
                 DTOtimeStamp.EndTime = timeStamp.EndTime;
-                DTOtimeStamp.EmployeeId = timeStamp.EmployeeId;
                 DTOtimeStamp.TaskId = timeStamp.TaskId;
+                DTOtimeStamp.EmployeeId = timeStamp.EmployeeId;
+                
 
                 return DTOtimeStamp;
             }
@@ -32,12 +33,34 @@ namespace DAL.Mapper
             {
                 timeStamp.StartTime = DTOtimeStamp.StartTime;
                 timeStamp.EndTime = DTOtimeStamp.EndTime;
-                timeStamp.EmployeeId = DTOtimeStamp.EmployeeId;
                 timeStamp.TaskId = DTOtimeStamp.TaskId;
+                timeStamp.EmployeeId = DTOtimeStamp.EmployeeId;
+                
 
                 return timeStamp;
             }
             else return null;
         }
+
+        public static List<TimeStampDTO> Map(List<TimeStamp> timeStamps)
+        {
+            List<TimeStampDTO> retur = new List<TimeStampDTO>();
+            foreach (var timeStamp in timeStamps)
+            {
+                retur.Add(TimeStampMapper.Map(timeStamp));
+            }
+            return retur;
+        }
+
+        public static List<TimeStamp> Map(List<TimeStampDTO> timeStampDTOs)
+        {
+            List<TimeStamp> retur = new List<TimeStamp>();
+            foreach (var timeStampDTO in timeStampDTOs)
+            {
+                retur.Add(TimeStampMapper.Map(timeStampDTO));
+            }
+            return retur;
+        }
+
     }
 }

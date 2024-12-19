@@ -18,6 +18,15 @@ namespace BLL.BLL
         {
             return EmployeeRepository.GetAllEmployees();
         }
+
+        public List<EmployeeDTO> GetAllEmployeesByDepartment(int id)
+        {
+            if (id < 0)
+            {
+                throw new ArgumentException("Department ID must be a positive integer.", nameof(id));
+            }
+            return EmployeeRepository.GetAllEmployeesByDepartment(id);
+        }
         public int AddEmployee(EmployeeDTO employee)
         {
             if (employee == null) throw new ArgumentNullException();

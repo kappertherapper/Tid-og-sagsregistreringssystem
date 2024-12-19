@@ -23,6 +23,11 @@ namespace BLL.BLL
             return TaskManagerRepository.GetAllTaskManagers();
         }
 
+        public List<TaskManagerDTO> GetAllTaskManagersByDepartment(int id)
+        {
+            return TaskManagerRepository.GetAllTaskManagersByDepartment(id);
+        }
+
         public int AddTaskManager(TaskManagerDTO taskManager)
         {
             if (taskManager == null) throw new ArgumentNullException();

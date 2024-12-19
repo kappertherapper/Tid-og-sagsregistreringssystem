@@ -29,6 +29,15 @@ namespace DAL.Repository
             }
         }
 
+        public static List<TaskManagerDTO> GetAllTaskManagersByDepartment(int id)
+        {
+            using (var context = new SagTidRegisterContext())
+            {
+                List<TaskManager> retur = context.TaskManagers.Where(t => t.DepartmentId == id).ToList();
+                return TaskManagerMapper.Map(retur);
+            }
+        }
+
         public static int AddTaskManager(TaskManagerDTO taskManager)
         {
             using (var context = new SagTidRegisterContext())

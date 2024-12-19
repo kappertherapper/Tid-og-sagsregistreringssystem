@@ -1,141 +1,100 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using Registreringssystem.Models;
+using BLL.BLL;
+using DTO.Models;
 
 namespace Tid__og_sagsregistreringssystem.Controllers
 {
+    public class TimeStampViewModel
+    {
+        public int SelectedDepartmentID { get; set; }
+        public int? SelectedTaskID { get; set; }
+        public int? SelectedEmployeesID { get; set; }
+        public DateTime startTime { get; set; }
+        public DateTime endTime  { get; set; }
+
+        public List<SelectListItem> Departments { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> Tasks { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> Employees { get; set; } = new List<SelectListItem>();
+    }
+
+
     public class TaskManagerController : Controller
     {
-        public List<Department> departments = new List<Department>();
-        public List<Employee> employees = new List<Employee>();
-        public List<TaskManager> tasks = new List<TaskManager>();
+        public EmployeeBLL EbLL = new EmployeeBLL();
+        public DepartmentBLL DepartBLL = new DepartmentBLL();
+        public TaskManagerBLL TaskBLL = new TaskManagerBLL();
+        public TimeStampBLL TimeBLL = new TimeStampBLL();
 
-        //test data
-        private void InitializeTestData()
-        {
-            // Creating company
-            var company = new Company("sejt company ja");
-
-            // Creating departments
-            var department1 = new Department("undersøgelse", company, 1);
-            var department2 = new Department("biologisk", company, 2);
-            var department3 = new Department("kateofask", company, 3);
-
-            // Creating employees
-            var employee1 = new Employee("Anders", "110795-5566");
-            var employee2 = new Employee("Noller", "160288-2776");
-            var employee3 = new Employee("Flemming", "110795-5786");
-
-            // Creating tasks
-            var task1 = new TaskManager("help", 1, "bare gøre det");
-            var task2 = new TaskManager("hæfghlp", 2, "ja gsdføre det");
-            var task3 = new TaskManager("dfg",3, "ja gøre det");
-            var task4 = new TaskManager("hældfgp", 4, "ja gøre det");
-            var task5= new TaskManager("hæfghlp", 5, "ja gøre det");
-
-            // Assigning departments
-            employee1.AssignDepartment(department1);
-            employee2.AssignDepartment(department2);
-            employee3.AssignDepartment(department3);
-
-            employees.AddRange(new[] { employee1, employee2, employee3 });
-            departments.AddRange(new[] { department1, department2, department3 });
-
-            //Assigning tasks
-            task1.AssignDepartment(department1);
-            task2.AssignDepartment(department2);
-            task3.AssignDepartment(department3);
-            task4.AssignDepartment(department1);
-            task5.AssignDepartment(department2);
-
-            tasks.AddRange(new[] { task1, task2, task3, task4, task5 });
-        }
-
+        [HttpGet]
         public ActionResult Index()
         {
-            InitializeTestData(); //test
-            ViewBag.Departments = departments;
-            ViewBag.Tasks = tasks;
-            return View("TaskManagerOverView");
+            var departments = DepartBLL.GetAllDepartments();
+            var model = new TimeStampViewModel
+            {
+               
+                Departments = departments.Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name
+                })
+                .ToList(),
+            };
+
+            return View("TaskManagerOverview", model);
         }
 
         
-        [HttpGet]
-        public JsonResult GetEmployeesByDepartment(int departmentNumber)
+        [HttpPost]
+        public ActionResult Index(TimeStampViewModel model)
         {
-            InitializeTestData();
+            var departments = DepartBLL.GetAllDepartments();
 
-            var filteredEmployees = employees
-                .Where(e => e.Department != null && e.Department.Number == departmentNumber)
-                .Select(e => new { e.Name, e.Cpr })
-                .ToList();
-
-            Debug.WriteLine(JsonConvert.SerializeObject(filteredEmployees));
-
-            return Json(filteredEmployees);
-        }
-        [HttpGet]
-        public JsonResult GetTasksByDepartment(int departmentNumber)
-        {
-            InitializeTestData();
-
-            var filteredTasks = tasks
-                .Where(t => t.Department != null && t.Department.Number == departmentNumber)
-                .Select(t => new { t.Title, t.TaskNumber })
-                .ToList();
-
-            return Json(filteredTasks);
-        }
-
-        // GET: TaskManagerController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: TaskManagerController/Create
-        public ActionResult CreateTimeStamp(TimeStamp timeStamp)
-        {
-            if (timeStamp.Task == null)
+            model.Departments = departments.Select(d => new SelectListItem
             {
-                Console.WriteLine("Task er null");
+                Value = d.Id.ToString(),
+                Text = d.Name
+            }).ToList();
+
+
+            var tasks = TaskBLL.GetAllTaskManagersByDepartment((int)model.SelectedDepartmentID);
+            var employees = EbLL.GetAllEmployeesByDepartment((int)model.SelectedDepartmentID);
+
+            model.Tasks = tasks.Select(t => new SelectListItem
+            {
+                Value = t.Id.ToString(),
+                Text = t.Title
+            }).ToList();
+
+            model.Employees = employees.Select(e => new SelectListItem
+            {
+                Value = e.Id.ToString(),
+                Text = e.Name
+            }).ToList();
+
+            return View("TaskManagerOverview", model);
+        }
+        
+
+        [HttpPost]
+        public ActionResult CreateTimeStamp(TimeStampViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                TimeStampDTO timestamp = new TimeStampDTO(
+                    model.startTime,
+                    model.endTime,
+                    (int)model.SelectedTaskID,
+                    (int)model.SelectedEmployeesID);
+
+                TimeBLL.AddTimeStamp(timestamp);
+
+                return RedirectToAction("Index");
             }
 
-            if (timeStamp.Employee == null)
-            {
-                Console.WriteLine("medarbejder er null");
-            }
-
-            if (timeStamp.StartTime >= timeStamp.EndTime)
-            {
-                Console.WriteLine("Sluttidspunkt skal være efter start");
-            }
-
-            if (timeStamp.Task.Department != timeStamp.Employee.Department)
-            {
-                Console.Write("Medarbejder og task er ikke i samme afdeling");
-            }
-
-            
-
-            return RedirectToAction("Index");
-        }
-
-        // GET: TaskManagerController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-
-        // GET: TaskManagerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            return View(model);
         }
     }
 }

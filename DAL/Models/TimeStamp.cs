@@ -14,12 +14,9 @@ namespace DAL.Models
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
-        public TimeStamp()
-        {
-            
-        }
+        public TimeStamp() { }
 
-        public TimeStamp(DateTime startTime, DateTime endTime, TaskManager task, Employee employee )
+        public TimeStamp(DateTime startTime, DateTime endTime, TaskManager task, Employee employee)
         {
             StartTime = startTime;
             EndTime = endTime;
