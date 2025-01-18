@@ -9,7 +9,7 @@ using DAL.Models;
 
 namespace DAL.Repository
 {
-    public class DepartmentRepository
+    public static class DepartmentRepository
     {
         public static DepartmentDTO GetDepartment(int id)
         {
@@ -23,7 +23,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                List<Department> retur = new List<Department>();
+                var retur = new List<Department>();
                 retur = context.Departments.ToList();
 
                 return DepartmentMapper.Map(retur);
@@ -44,7 +44,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                Department datadept = context.Departments.Find(department.Id);
+                var datadept = context.Departments.Find(department.Id);
                 DepartmentMapper.Update(department, datadept);
 
                 context.SaveChanges();

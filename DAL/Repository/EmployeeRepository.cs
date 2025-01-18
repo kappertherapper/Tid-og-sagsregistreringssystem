@@ -8,7 +8,7 @@ using System;
 
 namespace DAL.Repository
 {
-    public class EmployeeRepository
+    public static class EmployeeRepository
     {
         public static EmployeeDTO GetEmployee(int id)
         {
@@ -32,7 +32,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                List<Employee> retur = new List<Employee>();
+                var retur = new List<Employee>();
                 retur = context.Employees.ToList();
 
                 return EmployeeMapper.Map(retur);
@@ -54,7 +54,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                Employee dataemp = context.Employees.Find(employee.Id);
+                var dataemp = context.Employees.Find(employee.Id);
                 EmployeeMapper.Update(employee, dataemp);
 
                 context.SaveChanges();

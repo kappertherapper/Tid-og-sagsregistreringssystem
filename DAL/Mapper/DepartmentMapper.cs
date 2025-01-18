@@ -12,7 +12,7 @@ namespace DAL.Mapper
     {
         public static DepartmentDTO Map(Department department)
         {
-            DepartmentDTO DTOdepartment = new DepartmentDTO();
+            var DTOdepartment = new DepartmentDTO();
             if (department != null)
             {
                 DTOdepartment.Id = department.Id;
@@ -24,7 +24,7 @@ namespace DAL.Mapper
 
         public static Department Map(DepartmentDTO departmentDTO)
         {
-            Department DALdepartment = new Department();
+            var DALdepartment = new Department();
             if (departmentDTO != null)
             {
                 DALdepartment.Id = departmentDTO.Id;
@@ -38,22 +38,12 @@ namespace DAL.Mapper
 
         public static List<DepartmentDTO> Map(List<Department> departments)
         {
-            List<DepartmentDTO> retur = new List<DepartmentDTO>();
-            foreach (var department in departments)
-            {
-                retur.Add(DepartmentMapper.Map(department));
-            }
-            return retur;
+            return departments.Select(DepartmentMapper.Map).ToList();
         }
 
         public static List<Department> Map(List<DepartmentDTO> departmentDTOs)
         {
-            List<Department> retur = new List<Department>();
-            foreach (var departmentDTO in departmentDTOs)
-            {
-                retur.Add(DepartmentMapper.Map(departmentDTO));
-            }
-            return retur;
+            return departmentDTOs.Select(DepartmentMapper.Map).ToList();
         }
 
         internal static void Update(DepartmentDTO department, Department data)

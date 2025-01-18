@@ -12,7 +12,7 @@ namespace DAL.Mapper
     {
         public static TaskManagerDTO Map(TaskManager taskManager)
         {
-            TaskManagerDTO DTOtaskManager = new TaskManagerDTO();
+            var DTOtaskManager = new TaskManagerDTO();
             if (taskManager != null)
             {
                 DTOtaskManager.Id = taskManager.Id;
@@ -28,7 +28,7 @@ namespace DAL.Mapper
 
         public static TaskManager Map(TaskManagerDTO taskManagerDTO)
         {
-            TaskManager DALtaskManager = new TaskManager();
+            var DALtaskManager = new TaskManager();
             if (taskManagerDTO != null)
             {
                 DALtaskManager.Id = taskManagerDTO.Id;
@@ -44,22 +44,12 @@ namespace DAL.Mapper
 
         public static List<TaskManagerDTO> Map(List<TaskManager> taskManagers)
         {
-            List<TaskManagerDTO> retur = new List<TaskManagerDTO>();
-            foreach (var taskManager in taskManagers)
-            {
-                retur.Add(TaskManagerMapper.Map(taskManager));
-            }
-            return retur;
+            return taskManagers.Select(TaskManagerMapper.Map).ToList();
         }
 
         public static List<TaskManager> Map(List<TaskManagerDTO> taskManagerDTOs)
         {
-            List<TaskManager> retur = new List<TaskManager>();
-            foreach (var taskManagerDTO in taskManagerDTOs)
-            {
-                retur.Add(TaskManagerMapper.Map(taskManagerDTO));
-            }
-            return retur;
+            return taskManagerDTOs.Select(TaskManagerMapper.Map).ToList();
         }
 
         internal static void Update(TaskManagerDTO taskManager, TaskManager data)

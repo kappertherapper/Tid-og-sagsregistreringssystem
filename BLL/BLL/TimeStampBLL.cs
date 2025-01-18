@@ -18,23 +18,23 @@ namespace BLL.BLL
             return TimeStampRepository.GetTimeStamp(id);
         }
 
-        public int AddTimeStamp(TimeStampDTO timeStamp)
+        public static void AddTimeStamp(TimeStampDTO timeStamp)
         {
             if (timeStamp == null) throw new ArgumentNullException();
-            return TimeStampRepository.AddTimeStamp(timeStamp);
+            TimeStampRepository.AddTimeStamp(timeStamp);
         }
 
-        public List<TimeStampDTO> GetAllTimeStamps()
+        public static List<TimeStampDTO> GetAllTimeStamps()
         {
             return TimeStampRepository.GetAllTimeStamps();
         }
 
-        public List<TimeStampDTO> GetAllTimeStamps(int id)
+        public static List<TimeStampDTO> GetAllTimeStamps(int id)
         {
             return TimeStampRepository.GetAllTimeStamps();
         }
 
-        public List<TimeStampDTO> GetAllTimeStampsByEmployee(int id)
+        public static List<TimeStampDTO> GetAllTimeStampsByEmployee(int id)
         {
             return TimeStampRepository.GetAllTimeStampsOnEmployee(id);
         }

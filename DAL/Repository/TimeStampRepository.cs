@@ -10,7 +10,7 @@ using DTO.Models;
 
 namespace DAL.Repository
 {
-    public class TimeStampRepository
+    public static class TimeStampRepository
     {
         public static TimeStampDTO GetTimeStamp(int id)
         {
@@ -20,13 +20,13 @@ namespace DAL.Repository
             }
         }
 
-        public static int AddTimeStamp(TimeStampDTO timeStamp)
+        public static void AddTimeStamp(TimeStampDTO timeStamp)
         {
             using (var context = new SagTidRegisterContext())
             {
                 context.TimeStamps.Add(TimeStampMapper.Map(timeStamp));
                 context.SaveChanges();
-                return timeStamp.Id;
+                //return timeStamp.Id;
             }
         }
 
@@ -34,7 +34,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                List<TimeStamp> retur = context.TimeStamps.ToList();
+                var retur = context.TimeStamps.ToList();
                 return TimeStampMapper.Map(retur);
             }
         }
@@ -43,7 +43,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                List<TimeStamp> retur = context.TimeStamps.Where(t => t.EmployeeId == id).ToList();
+                var retur = context.TimeStamps.Where(t => t.EmployeeId == id).ToList();
                 return TimeStampMapper.Map(retur);
             }
         }

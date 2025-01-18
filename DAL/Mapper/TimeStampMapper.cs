@@ -12,7 +12,7 @@ namespace DAL.Mapper
     {
         public static TimeStampDTO Map(TimeStamp timeStamp)
         {
-            TimeStampDTO DTOtimeStamp = new TimeStampDTO();
+            var DTOtimeStamp = new TimeStampDTO();
             if (timeStamp != null)
             {
                 DTOtimeStamp.StartTime = timeStamp.StartTime;
@@ -28,7 +28,7 @@ namespace DAL.Mapper
 
         public static TimeStamp Map(TimeStampDTO DTOtimeStamp)
         {
-            TimeStamp timeStamp = new TimeStamp();
+            var timeStamp = new TimeStamp();
             if (DTOtimeStamp != null)
             {
                 timeStamp.StartTime = DTOtimeStamp.StartTime;
@@ -44,23 +44,12 @@ namespace DAL.Mapper
 
         public static List<TimeStampDTO> Map(List<TimeStamp> timeStamps)
         {
-            List<TimeStampDTO> retur = new List<TimeStampDTO>();
-            foreach (var timeStamp in timeStamps)
-            {
-                retur.Add(TimeStampMapper.Map(timeStamp));
-            }
-            return retur;
+            return timeStamps.Select(TimeStampMapper.Map).ToList();
         }
 
         public static List<TimeStamp> Map(List<TimeStampDTO> timeStampDTOs)
         {
-            List<TimeStamp> retur = new List<TimeStamp>();
-            foreach (var timeStampDTO in timeStampDTOs)
-            {
-                retur.Add(TimeStampMapper.Map(timeStampDTO));
-            }
-            return retur;
+            return timeStampDTOs.Select(TimeStampMapper.Map).ToList();
         }
-
     }
 }

@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using BLL.BLL;
 using DTO.Models;
 
-namespace GUII
+namespace WPF
 {
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
@@ -26,9 +26,9 @@ namespace GUII
         private readonly TaskManagerBLL TaskBLL;
 
         private DepartmentDTO selectedDepartment;
-        
 
-        public EmployeeDTO selectedEmployee;
+
+        private EmployeeDTO selectedEmployee;
         public EmployeeDTO SelectedEmployee // Get employee from list
         {
             get => selectedEmployee;
@@ -41,7 +41,7 @@ namespace GUII
 
         private DepartmentDTO selectedDepartment2;
 
-        public TaskManagerDTO selectedTask;
+        private TaskManagerDTO selectedTask;
         public TaskManagerDTO SelectedTask // Get task from list
         {
             get => selectedTask;
@@ -66,23 +66,23 @@ namespace GUII
             DisplayEmployees();
             DisplayTasks();
 
-            Employees = new ObservableCollection<EmployeeDTO>(EbLL.GetAllEmployees());
+            Employees = new ObservableCollection<EmployeeDTO>(EmployeeBLL.GetAllEmployees());
             DataContext = this;
 
-            DepartmentComboBox.ItemsSource = DepartBLL.GetAllDepartments();
-            DepartmentComboBox2.ItemsSource = DepartBLL.GetAllDepartments();
+            DepartmentComboBox.ItemsSource = DepartmentBLL.GetAllDepartments();
+            DepartmentComboBox2.ItemsSource = DepartmentBLL.GetAllDepartments();
         }
 
         private void DisplayEmployees()
         {
-            List<EmployeeDTO> employees = EbLL.GetAllEmployees();
+            var employees = EmployeeBLL.GetAllEmployees();
 
             EmployeeListView.ItemsSource = employees;
         }
 
         private void DisplayTasks()
         {
-            List<TaskManagerDTO> tasks = TaskBLL.GetAllTaskManagers();
+            var tasks = TaskBLL.GetAllTaskManagers();
 
             TaskListView.ItemsSource = tasks;
         }
@@ -101,7 +101,7 @@ namespace GUII
 
         private void Button_AddEmployee(object sender, RoutedEventArgs e)
         {
-            EmployeeDTO employee = new EmployeeDTO();
+            var employee = new EmployeeDTO();
 
             string name = NameInput.Text.Trim();
             string cpr = CprInput.Text.Trim();
@@ -111,7 +111,7 @@ namespace GUII
                 employee.Name = name;
                 employee.Cpr = cpr;
                 employee.DepartmentId = selectedDepartment.Id;
-                EbLL.AddEmployee(employee);
+                EmployeeBLL.AddEmployee(employee);
 
                 // Clear fields
                 NameInput.Text = string.Empty;
@@ -128,10 +128,10 @@ namespace GUII
 
         private void Button_AddTask(object sender, RoutedEventArgs e)
         {
-            TaskManagerDTO task = new TaskManagerDTO();
+            var task = new TaskManagerDTO();
 
             string title = TitleInput.Text.Trim();
-            int taskNumber = int.Parse(TaskNumberInput.Text);
+            var taskNumber = int.Parse(TaskNumberInput.Text);
             string description = DescriptionInput.Text.Trim();
 
             if (!string.IsNullOrEmpty(title) || taskNumber > 0 || !string.IsNullOrEmpty(description) || selectedDepartment2 != null)
@@ -161,7 +161,7 @@ namespace GUII
             {
                 string updatedName = NameInput.Text.Trim();
                 string updatedCpr = CprInput.Text.Trim();
-                DepartmentDTO updatedDepartment = selectedDepartment;
+                var updatedDepartment = selectedDepartment;
 
                 if (!string.IsNullOrEmpty(updatedName) || !string.IsNullOrEmpty(updatedCpr) || updatedDepartment != null)
                 {
@@ -169,7 +169,7 @@ namespace GUII
                     SelectedEmployee.Cpr = !string.IsNullOrEmpty(updatedCpr) ? updatedCpr : SelectedEmployee.Cpr;
                     SelectedEmployee.DepartmentId = updatedDepartment?.Id ?? SelectedEmployee.DepartmentId;
 
-                    EbLL.EditEmployee(SelectedEmployee);
+                    EmployeeBLL.EditEmployee(SelectedEmployee);
 
                     // Clear fields
                     NameInput.Text = string.Empty;
@@ -199,7 +199,7 @@ namespace GUII
                 string updatedTitle = TitleInput.Text.Trim();
                 int? updatedTaskNumber = null;
                 string updatedDescription = DescriptionInput.Text.Trim();
-                DepartmentDTO updatedDepartment = selectedDepartment2;
+                var updatedDepartment = selectedDepartment2;
 
                 if (!string.IsNullOrWhiteSpace(TaskNumberInput.Text) && int.TryParse(TaskNumberInput.Text, out var taskNumber))
                 {
@@ -209,11 +209,11 @@ namespace GUII
                 if (!string.IsNullOrEmpty(updatedTitle) || updatedTaskNumber > 0 || !string.IsNullOrEmpty(updatedDescription) || updatedDepartment != null)
                 {
                     SelectedTask.Title = !string.IsNullOrEmpty(updatedTitle) ? updatedTitle : selectedTask.Title;
-                    selectedTask.TaskNumber =  updatedTaskNumber.HasValue ? updatedTaskNumber.Value : selectedTask.TaskNumber;
+                    selectedTask.TaskNumber =  updatedTaskNumber ?? selectedTask.TaskNumber;
                     SelectedTask.Description = !string.IsNullOrEmpty(updatedDescription) ? updatedDescription : selectedTask.Description;
                     SelectedTask.DepartmentId = updatedDepartment?.Id ?? selectedTask.DepartmentId;
 
-                    TaskBLL.EditTaskManager(SelectedTask);
+                    TaskManagerBLL.EditTaskManager(SelectedTask);
 
                     // Clear fields
                     TitleInput.Text = string.Empty;

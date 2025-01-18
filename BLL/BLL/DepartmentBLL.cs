@@ -20,7 +20,7 @@ namespace BLL.BLL
             return DepartmentRepository.GetDepartment(id);
         }
 
-        public List<DepartmentDTO> GetAllDepartments()
+        public static List<DepartmentDTO> GetAllDepartments()
         {
             return DepartmentRepository.GetAllDepartments();
         }

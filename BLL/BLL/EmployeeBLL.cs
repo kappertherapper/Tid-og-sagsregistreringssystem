@@ -14,12 +14,12 @@ namespace BLL.BLL
             return EmployeeRepository.GetEmployee(id);
         }
 
-        public List<EmployeeDTO> GetAllEmployees()
+        public static List<EmployeeDTO> GetAllEmployees()
         {
             return EmployeeRepository.GetAllEmployees();
         }
 
-        public List<EmployeeDTO> GetAllEmployeesByDepartment(int id)
+        public static List<EmployeeDTO> GetAllEmployeesByDepartment(int id)
         {
             if (id < 0)
             {
@@ -27,30 +27,15 @@ namespace BLL.BLL
             }
             return EmployeeRepository.GetAllEmployeesByDepartment(id);
         }
-        public int AddEmployee(EmployeeDTO employee)
+        public static void AddEmployee(EmployeeDTO employee)
         {
             if (employee == null) throw new ArgumentNullException();
-            return EmployeeRepository.AddEmployee(employee);
+            EmployeeRepository.AddEmployee(employee);
         }
-        public void EditEmployee(EmployeeDTO employee)
+        public static void EditEmployee(EmployeeDTO employee)
         {
             if (employee == null) throw new ArgumentNullException();
             EmployeeRepository.EditEmployee(employee);
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var BLL = new EmployeeBLL();
-            var employees = BLL.GetAllEmployees();
-
-            Console.WriteLine("Jobs retrieved:");
-            foreach (var e in employees)
-            {
-                Console.WriteLine(e.Name);
-            }
         }
     }
 }

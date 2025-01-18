@@ -10,7 +10,7 @@ using DAL.Models;
 
 namespace DAL.Repository
 {
-    public  class TaskManagerRepository
+    public static class TaskManagerRepository
     {
         public static TaskManagerDTO GetTaskManager(int id)
         {
@@ -24,7 +24,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                List<TaskManager> retur = context.TaskManagers.ToList();
+                var retur = context.TaskManagers.ToList();
                 return TaskManagerMapper.Map(retur);
             }
         }
@@ -33,7 +33,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                List<TaskManager> retur = context.TaskManagers.Where(t => t.DepartmentId == id).ToList();
+                var retur = context.TaskManagers.Where(t => t.DepartmentId == id).ToList();
                 return TaskManagerMapper.Map(retur);
             }
         }
@@ -52,7 +52,7 @@ namespace DAL.Repository
         {
             using (var context = new SagTidRegisterContext())
             {
-                TaskManager dataTaskManager = context.TaskManagers.Find(taskManager.Id);
+                var dataTaskManager = context.TaskManagers.Find(taskManager.Id);
                 TaskManagerMapper.Update(taskManager, dataTaskManager);
                 context.SaveChanges();
             }

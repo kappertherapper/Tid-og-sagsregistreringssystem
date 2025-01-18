@@ -12,26 +12,20 @@ namespace Tid__og_sagsregistreringssystem.Controllers
         public int SelectedDepartmentID { get; set; }
         public int? SelectedTaskID { get; set; }
         public int? SelectedEmployeesID { get; set; }
-        public DateTime startTime { get; set; }
-        public DateTime endTime  { get; set; }
+        public DateTime startTime { get; }
+        public DateTime endTime  { get; }
 
         public List<SelectListItem> Departments { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Tasks { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Employees { get; set; } = new List<SelectListItem>();
     }
-
-
+    
     public class TaskManagerController : Controller
     {
-        public EmployeeBLL EbLL = new EmployeeBLL();
-        public DepartmentBLL DepartBLL = new DepartmentBLL();
-        public TaskManagerBLL TaskBLL = new TaskManagerBLL();
-        public TimeStampBLL TimeBLL = new TimeStampBLL();
-
         [HttpGet]
         public ActionResult Index()
         {
-            var departments = DepartBLL.GetAllDepartments();
+            var departments = DepartmentBLL.GetAllDepartments();
             var model = new TimeStampViewModel
             {
                
@@ -45,22 +39,20 @@ namespace Tid__og_sagsregistreringssystem.Controllers
 
             return View("TaskManagerOverview", model);
         }
-
         
         [HttpPost]
         public ActionResult Index(TimeStampViewModel model)
         {
-            var departments = DepartBLL.GetAllDepartments();
+            var departments = DepartmentBLL.GetAllDepartments();
 
             model.Departments = departments.Select(d => new SelectListItem
             {
                 Value = d.Id.ToString(),
                 Text = d.Name
             }).ToList();
-
-
-            var tasks = TaskBLL.GetAllTaskManagersByDepartment((int)model.SelectedDepartmentID);
-            var employees = EbLL.GetAllEmployeesByDepartment((int)model.SelectedDepartmentID);
+            
+            var tasks = TaskManagerBLL.GetAllTaskManagersByDepartment(model.SelectedDepartmentID);
+            var employees = EmployeeBLL.GetAllEmployeesByDepartment(model.SelectedDepartmentID);
 
             model.Tasks = tasks.Select(t => new SelectListItem
             {
@@ -77,24 +69,22 @@ namespace Tid__og_sagsregistreringssystem.Controllers
             return View("TaskManagerOverview", model);
         }
         
-
         [HttpPost]
         public ActionResult CreateTimeStamp(TimeStampViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                TimeStampDTO timestamp = new TimeStampDTO(
-                    model.startTime,
-                    model.endTime,
-                    (int)model.SelectedTaskID,
-                    (int)model.SelectedEmployeesID);
+            if (!ModelState.IsValid) return View(model);
 
-                TimeBLL.AddTimeStamp(timestamp);
+            if (model.SelectedTaskID == null) return RedirectToAction("Index");
+            if (model.SelectedEmployeesID == null) return RedirectToAction("Index");
+            
+            var timestamp = new TimeStampDTO(
+                model.startTime,
+                model.endTime,
+                (int)model.SelectedTaskID,
+                (int)model.SelectedEmployeesID);
 
-                return RedirectToAction("Index");
-            }
-
-            return View(model);
+            TimeStampBLL.AddTimeStamp(timestamp);
+            return RedirectToAction("Index");
         }
     }
 }

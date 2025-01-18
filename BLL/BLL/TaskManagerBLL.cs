@@ -18,23 +18,23 @@ namespace BLL.BLL
             return TaskManagerRepository.GetTaskManager(id);
         }
 
-        public List<TaskManagerDTO> GetAllTaskManagers()
+        public static List<TaskManagerDTO> GetAllTaskManagers()
         {
             return TaskManagerRepository.GetAllTaskManagers();
         }
 
-        public List<TaskManagerDTO> GetAllTaskManagersByDepartment(int id)
+        public static List<TaskManagerDTO> GetAllTaskManagersByDepartment(int id)
         {
             return TaskManagerRepository.GetAllTaskManagersByDepartment(id);
         }
 
-        public int AddTaskManager(TaskManagerDTO taskManager)
+        public static void AddTaskManager(TaskManagerDTO taskManager)
         {
             if (taskManager == null) throw new ArgumentNullException();
-            return TaskManagerRepository.AddTaskManager(taskManager);
+            TaskManagerRepository.AddTaskManager(taskManager);
         }
 
-        public void EditTaskManager(TaskManagerDTO taskManager)
+        public static void EditTaskManager(TaskManagerDTO taskManager)
         {
             if (taskManager == null) throw new ArgumentNullException();
             TaskManagerRepository.EditTaskManager(taskManager);

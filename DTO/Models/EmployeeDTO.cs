@@ -27,13 +27,11 @@ namespace DTO.Models
             Cpr = cpr;
             DepartmentId = departmentId;
         }
-
-
+        
         public EmployeeDTO(string name)
         {
             Name = name;
             Initials = string.IsNullOrEmpty(Name) ? "" : Name.Substring(0, Math.Min(2, Name.Length));
         }
     }
-
 }

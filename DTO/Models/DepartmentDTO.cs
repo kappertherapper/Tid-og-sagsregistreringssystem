@@ -22,6 +22,5 @@ namespace DTO.Models
             Name = name;
             Number = number;
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DTO.Models;
 using DAL.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL.Mapper
 {
@@ -8,7 +9,7 @@ namespace DAL.Mapper
     {
         public static EmployeeDTO Map(Employee employee)
         {
-            EmployeeDTO DTOemployee = new EmployeeDTO();
+            var DTOemployee = new EmployeeDTO();
             if (employee != null)
             {
                 DTOemployee.Id = employee.Id;
@@ -24,7 +25,7 @@ namespace DAL.Mapper
 
         public static Employee Map(EmployeeDTO employee)
         {
-            Employee DALemployee = new Employee();
+            var DALemployee = new Employee();
             if (employee != null)
             {
                 DALemployee.Id = employee.Id;
@@ -40,22 +41,12 @@ namespace DAL.Mapper
 
         public static List<EmployeeDTO> Map(List<Employee> employees)
         {
-            List<EmployeeDTO> retur = new List<EmployeeDTO>();
-            foreach (var employee in employees)
-            {
-                retur.Add(EmployeeMapper.Map(employee));
-            }
-            return retur;
+            return employees.Select(EmployeeMapper.Map).ToList();
         }
 
         public static List<Employee> Map(List<EmployeeDTO> employeeDTOs)
         {
-            List<Employee> retur = new List<Employee>();
-            foreach (var employeeDTO in employeeDTOs)
-            {
-                retur.Add(EmployeeMapper.Map(employeeDTO));
-            }
-            return retur;
+            return employeeDTOs.Select(EmployeeMapper.Map).ToList();
         }
 
         internal static void Update(EmployeeDTO employee, Employee dataemp)
