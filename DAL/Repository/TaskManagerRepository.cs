@@ -38,13 +38,12 @@ namespace DAL.Repository
             }
         }
 
-        public static int AddTaskManager(TaskManagerDTO taskManager)
+        public static void AddTaskManager(TaskManagerDTO taskManager)
         {
             using (var context = new SagTidRegisterContext())
             {
                 context.TaskManagers.Add(TaskManagerMapper.Map(taskManager));
                 context.SaveChanges();
-                return taskManager.Id;
             }
         }
 

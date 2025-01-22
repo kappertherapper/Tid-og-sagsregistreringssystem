@@ -39,13 +39,12 @@ namespace DAL.Repository
             }
         }
 
-        public static int AddEmployee(EmployeeDTO employee)
+        public static void AddEmployee(EmployeeDTO employee)
         {
             using (var context = new SagTidRegisterContext())
             {
                 context.Employees.Add(EmployeeMapper.Map(employee));
                 context.SaveChanges();
-                return employee.Id;
             }
                 
         }

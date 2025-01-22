@@ -39,7 +39,8 @@ namespace WPF
             }
         }
 
-        private DepartmentDTO selectedDepartment2;
+        private DepartmentDTO selectedDep1419
+        artment2;
 
         private TaskManagerDTO selectedTask;
         public TaskManagerDTO SelectedTask // Get task from list

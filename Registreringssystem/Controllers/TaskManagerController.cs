@@ -40,7 +40,7 @@ namespace Tid__og_sagsregistreringssystem.Controllers
             return View("TaskManagerOverview", model);
         }
         
-        [HttpPost]
+        [HttpGet]
         public ActionResult Index(TimeStampViewModel model)
         {
             var departments = DepartmentBLL.GetAllDepartments();

@@ -20,7 +20,7 @@ namespace DAL.Models
         public Department(string name, int number)
             {
                 Name = name;
-                Number = number;   //new Random().Next(1000, 9999);
+                Number = number;
             }
         }
     }

@@ -8,32 +8,31 @@ using DTO.Models;
 
 namespace DAL.Mapper
 {
-    public class DepartmentMapper
+    public static class DepartmentMapper
     {
         public static DepartmentDTO Map(Department department)
         {
             var DTOdepartment = new DepartmentDTO();
-            if (department != null)
-            {
-                DTOdepartment.Id = department.Id;
-                DTOdepartment.Name = department.Name;
-                return DTOdepartment;
-            }
-            else return null;
+            
+            if (department == null) return null;
+            DTOdepartment.Id = department.Id;
+            DTOdepartment.Name = department.Name;
+            
+            return DTOdepartment;
+
         }
 
         public static Department Map(DepartmentDTO departmentDTO)
         {
             var DALdepartment = new Department();
-            if (departmentDTO != null)
-            {
-                DALdepartment.Id = departmentDTO.Id;
-                DALdepartment.Name = departmentDTO.Name;
-                DALdepartment.Number = departmentDTO.Number;
+            
+            if (departmentDTO == null) return null;
+            DALdepartment.Id = departmentDTO.Id;
+            DALdepartment.Name = departmentDTO.Name;
+            DALdepartment.Number = departmentDTO.Number;
 
-                return DALdepartment;
-            }
-            else return null;
+            return DALdepartment;
+
         }
 
         public static List<DepartmentDTO> Map(List<Department> departments)
@@ -48,13 +47,9 @@ namespace DAL.Mapper
 
         internal static void Update(DepartmentDTO department, Department data)
         {
-            if (department != null)
-            {
-                data.Name = department.Name;
-                data.Number = department.Number;
-            }
-            else
-                data = null;
+            if (department == null) return;
+            data.Name = department.Name;
+            data.Number = department.Number;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace DAL.Models
         public string Description { get; set; }
         public int DepartmentId { get; set; }
         public virtual Department Department { get; set; }
-        public ICollection<TimeStamp> TimeStamps { get; set; }
+        public ICollection<TimeStamp> TimeStamps { get; }
 
         public TaskManager()
         {

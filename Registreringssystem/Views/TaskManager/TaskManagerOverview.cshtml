@@ -35,12 +35,12 @@
     </div>
 
     <div>
-        <label for="SelectedTaskID">Vælg en opgave:</label>
+        <label>Vælg en opgave:</label>
         @Html.DropDownListFor(m => m.SelectedTaskID, Model.Tasks, "Vælg en sag", new { @required = "required" })<br /> <br />
     </div>
 
     <div>
-        <label for="SelectedEmployeesID">Vælg en medarbejder</label>
+        <label>Vælg en medarbejder</label>
         @Html.DropDownListFor(m => m.SelectedEmployeesID, Model.Employees, "Vælg en medarbejder", new { @required = "required" }) <br /><br />
     </div>
 

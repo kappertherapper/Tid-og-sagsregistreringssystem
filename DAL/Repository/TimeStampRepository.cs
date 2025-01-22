@@ -26,7 +26,6 @@ namespace DAL.Repository
             {
                 context.TimeStamps.Add(TimeStampMapper.Map(timeStamp));
                 context.SaveChanges();
-                //return timeStamp.Id;
             }
         }
 
